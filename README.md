@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# Learning-to-compose
-[ICLR'24] Learning to Compose: Improving Object Centric Learning by Injecting Compositionality
-
-To be updated Soon.
-=======
 # Learning to Compose: Improving Object Centric Learning by Injecting Compositionality (ICLR 2024)
 
 This repository is an official implementation of the paper:\
@@ -73,4 +67,3 @@ If you find this work useful, please consider citing:
   year={2024}
 }
 ```
->>>>>>> 79a60ad473ea5cbf932eaffde4c78a0839ec591c
