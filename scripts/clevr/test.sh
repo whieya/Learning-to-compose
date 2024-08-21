@@ -9,7 +9,6 @@ gpus=$2
 latent_size=192
 num_slots=11
 diff_dim=192
-load_ckpt_path=$3
 
 LATENT_SIZE=${latent_size}
 NUM_DEC_BLOCKS=8
@@ -30,7 +29,7 @@ echo ${exp_name}
 echo ${gpus}
 echo ${load_ckpt_path}
 
-accelerate launch --use_deepspeed --gradient_clipping 5.0 --num_processes 1 --main_process_port=${port} --gpu_ids=${gpus} train_object_discovery.py \
+accelerate launch --use_deepspeed --gradient_clipping 5.0 --num_processes 4 --main_process_port=${port} --gpu_ids=${gpus} train_object_discovery.py \
     --exp_name=${exp_name} \
     --num_slots ${num_slots} \
     --lr_sa ${lr_sa} \
@@ -64,7 +63,5 @@ accelerate launch --use_deepspeed --gradient_clipping 5.0 --num_processes 1 --ma
     --scale_latent 1.0 \
     --diff_dim ${diff_dim} \
     --num_workers 4 \
-    --eval_miou \
-    --load_ckpt_path ${load_ckpt_path} \
     --share_slot_init 
 

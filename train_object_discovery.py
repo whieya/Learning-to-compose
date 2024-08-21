@@ -14,25 +14,33 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # training configs
-    parser.add_argument('--exp_name', type=str, default='test')
-    parser.add_argument('--diffusion_path', type=str, default='test')
-    parser.add_argument('--downsample', action='store_true')
+    parser.add_argument('--exp_name', type=str, default='test', 
+                        help='A name you want to save as')
+    parser.add_argument('--downsample', action='store_true', 
+                        help='Whether to downsample the input image')
     parser.add_argument('--debug', action='store_true')
-    parser.add_argument('--lr_lsd', type=float, default=1e-4)
-    parser.add_argument('--lr_sa', type=float, default=3e-5)
-    parser.add_argument('--seed', type=int, default=5)
+    parser.add_argument('--lr_lsd', type=float, default=1e-4, 
+                        help='Learning rate for LSD components')
+    parser.add_argument('--lr_sa', type=float, default=3e-5, 
+                        help='Learning rate for slot attention components')
+    parser.add_argument('--seed', type=int, default=5, help='Seed')
     parser.add_argument('--device', type=str, default='cuda')
-    parser.add_argument('--steps', type=int, default=1000)
-    parser.add_argument('--warmup_steps', type=int, default=1000)
+    parser.add_argument('--steps', type=int, default=1000, 
+                        help='Total steps to be trained')
+    parser.add_argument('--warmup_steps', type=int, default=1000, 
+                        help='Warmup Steps for a learning rate')
     parser.add_argument('--use_exp_decay', action='store_true', default=False)
     parser.add_argument('--exp_decay_rate', type=float, default=0.5)
     parser.add_argument('--use_warmup_lr', action='store_true', default=False)
     parser.add_argument('--exp_decay_steps', type=int, default=20000)
-    parser.add_argument('--load_ckpt_path', type=str, default=None)
-    parser.add_argument('--use_accel', action='store_true', default=False)
-    parser.add_argument("--local_rank", type=int, default=-1, help="For distributed training: local_rank")
-    parser.add_argument('--eval_miou', action='store_true', default=False)
-
+    parser.add_argument('--load_ckpt_path', type=str, default=None, 
+                        help='Location of pretrained model checkpoints')
+    parser.add_argument('--use_accel', action='store_true', default=False, 
+                        help='whether to use accelerate')
+    parser.add_argument("--local_rank", type=int, default=-1, 
+                        help="For distributed training: local_rank")
+    parser.add_argument('--eval_miou', action='store_true', default=False, 
+                        help='If this flag is on, it will only evaluate the model')
 
     # data
     parser.add_argument('--dataset_name', type=str, default='clevr')
@@ -54,21 +62,28 @@ def parse_args():
     parser.add_argument('--lambda_slot_diffusion', type=float, default=0.0)
 
     # sds hyperparameters
-    parser.add_argument('--max_steps', type=int, default=500)
-    parser.add_argument('--ddim_steps', type=int, default=10)
+    parser.add_argument('--max_steps', type=int, default=500, 
+                        help='Max denoise level when applying SDS loss. Usually we 500.')
+    parser.add_argument('--ddim_steps', type=int, default=1,
+                        help='ddim step for decoding composite image. We use 1')
     parser.add_argument('--scale_latent', type=float, default=1.0)  # legacy 
     parser.add_argument('--diff_dim', type=int, default=192)
 
     #slot attention
-    parser.add_argument('--slot_encode_RGB', action='store_true', default=False)
-    parser.add_argument('--cnn_enc_type', type=str, default='unet')
+    parser.add_argument('--slot_encode_RGB', action='store_true', default=False,
+                        help='If this flag is on, the slot encoder gets RGB image as input')
+    parser.add_argument('--cnn_enc_type', type=str, default='unet',
+                        help='Type of encoder in slot attention module : [cnn or unet]')
     parser.add_argument('--latent_size', type=int, default=192)
     parser.add_argument('--input_channels', type=int, default=3)
     parser.add_argument('--mlp_size', type=int, default=192)
     parser.add_argument('--num_slots', type=int, default=0)
     parser.add_argument('--attention_iters', type=int, default=7)
-    parser.add_argument('--cnn_downsample', type=int, default=1)
-    parser.add_argument('--share_slot_init', action='store_true', default=False)
+    parser.add_argument('--cnn_downsample', type=int, default=1, 
+                        help='downsample ratio in RGB encoder')
+    parser.add_argument('--share_slot_init', action='store_true', default=False,
+                        help='When this flag is on, the slot initialization is shared accross \
+                                slots to be mixed.')
 
     #transformer 
     parser.add_argument('--num_dec_blocks', type=int, default=2)
@@ -141,7 +156,6 @@ def main(config):
     # main model for composing slots
     model = Comp_Model(config,
                        resolution=config.image_size, num_slots=config.num_slots,
-                       ckpt=config.diffusion_path,
                        log_n_imgs=config.log_n_imgs, 
                        dataset_name=config.dataset_name,
                        max_steps=config.max_steps,

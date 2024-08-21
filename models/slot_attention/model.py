@@ -182,7 +182,6 @@ class Comp_Model(nn.Module):
             device='cuda', 
             resolution=64, 
             num_slots=11, 
-            ckpt=None, 
             name='Comp_Model', 
             log_n_imgs=4, 
             dataset_name=None, 
@@ -195,7 +194,6 @@ class Comp_Model(nn.Module):
             ):
         super().__init__()
         
-        self.log_dir = f'{ckpt}/log_samples_{name}'
         self.dataset_name = dataset_name
         self.device = device
 
