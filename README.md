@@ -43,6 +43,12 @@ bash scripts/clevr/test.sh [PORT] [GPU_IDS]
 * [GPU_IDS]:
   * 0,1,2,3 : use 4 GPUs from 0 to 3.
 
+Note that you should properly change the running setting of accelerate. Use following command :
+```
+accelerate config
+```
+We recommend to use multi-gpu setting (we used 4 gpus per experiments) with deepspeed. 
+
 ## Evaluation
 The scripts for evaluation can be found in scripts folder as well. You may excute the script as following:
 ```
