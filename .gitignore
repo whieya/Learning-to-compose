@@ -1,5 +1,6 @@
 vq_converter/
 analysis/
+wandb/ 
 
 *debug*
 
