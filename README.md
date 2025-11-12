@@ -66,10 +66,10 @@ for his invaluable assistance in the implementation of Latent Slot Diffusion par
 ## Citation
 If you find this work useful, please consider citing:
 ```
-@inproceedings{jung2024l2c,
-  title={Learning to Compose: Improving Object Centric Learning by Injecting Compositionality},
+@article{jung2024learning,
+  title={Learning to compose: Improving object centric learning by injecting compositionality},
   author={Jung, Whie and Yoo, Jaehoon and Ahn, Sungjin and Hong, Seunghoon},
-  booktitle={ICLR},
+  journal={arXiv preprint arXiv:2405.00646},
   year={2024}
 }
 ```
